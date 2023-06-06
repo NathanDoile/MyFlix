@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/myflix
-    username: root
-    password: root
+    username: myflix
+    password: myflix
   jpa:
     hibernate:
       ddl-auto: validate
