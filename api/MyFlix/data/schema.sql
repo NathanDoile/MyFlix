@@ -1,0 +1,69 @@
+DROP SCHEMA IF EXISTS myflix;
+
+CREATE SCHEMA IF NOT EXISTS myflix;
+
+USE myflix;
+
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `id` BIGINT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) UNIQUE NOT NULL,
+  `data_nascimento` DATE,
+  `senha` VARCHAR(500) NOT NULL,
+  `ativo` BOOLEAN DEFAULT TRUE,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `diretor` (
+  `id` BIGINT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+  `nome_completo` VARCHAR(255) NOT NULL,
+  `data_nascimento` DATE NOT NULL,
+  `resumo_historia` VARCHAR(500) NOT NULL,
+  `foto` LONGBLOB NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `ator` (
+  `id` BIGINT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+  `nome_completo` VARCHAR(255) NOT NULL,
+  `data_nascimento` DATE NOT NULL,
+  `resumo_historia` VARCHAR(500) NOT NULL,
+  `foto` LONGBLOB NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `filme` (
+  `id` BIGINT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(500) UNIQUE NOT NULL,
+  `descricao` VARCHAR(1000) NOT NULL,
+  `banner` LONGBLOB NOT NULL,
+  `id_diretor` BIGINT UNSIGNED UNIQUE NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_diretor`) REFERENCES `diretor` (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `usuario_filme` (
+  `id` BIGINT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+  `id_usuario` BIGINT UNSIGNED UNIQUE NOT NULL,
+  `id_filme` BIGINT UNSIGNED UNIQUE NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`),
+  FOREIGN KEY (`id_filme`) REFERENCES `filme` (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `ator_filme` (
+  `id` BIGINT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+  `id_ator` BIGINT UNSIGNED UNIQUE NOT NULL,
+  `id_filme` BIGINT UNSIGNED UNIQUE NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_ator`) REFERENCES `ator` (`id`),
+  FOREIGN KEY (`id_filme`) REFERENCES `filme` (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS permissao (
+  `id` BIGINT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+  `funcao` VARCHAR(100) NOT NULL,
+  `id_usuario` BIGINT UNSIGNED UNIQUE NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)
+);
