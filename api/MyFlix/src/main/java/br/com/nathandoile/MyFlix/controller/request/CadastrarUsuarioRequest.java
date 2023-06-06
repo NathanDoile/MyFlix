@@ -1,11 +1,17 @@
 package br.com.nathandoile.MyFlix.controller.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class CadastrarUsuarioRequest {
 
